@@ -19,7 +19,7 @@
 
 static const char *SPECIAL_CHARS_REGULAR = "@;~$#|`\"'()<>";
 
-static bool isAnExport(RBinSymbol *s) {
+static bool is_an_export(RBinSymbol *s) {
 	/* workaround for some bin plugs */
 	if (s->is_imported) {
 		return false;
@@ -4659,7 +4659,7 @@ static RList *foreach3list(RCore *core, char type, const char *glob) {
 			RList *symlist = r_bin_get_symbols (core->bin);
 			bool va = r_config_get_b (core->config, "io.va");
 			r_list_foreach (symlist, iter, sym) {
-				if (!isAnExport (sym)) {
+				if (!is_an_export (sym)) {
 					continue;
 				}
 				ut64 addr = va? sym->vaddr: sym->paddr;
