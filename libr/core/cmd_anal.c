@@ -6534,18 +6534,11 @@ static void cmd_aespc(RCore *core, ut64 addr, ut64 until_addr, int off) {
 			break;
 		}
 		// skip calls and such
-		switch (aop.type) {
-		case R_ANAL_OP_TYPE_TRAP:
-		case R_ANAL_OP_TYPE_CALL:
-		case R_ANAL_OP_TYPE_UCALL:
-		case R_ANAL_OP_TYPE_ICALL:
-		case R_ANAL_OP_TYPE_CCALL:
-		case R_ANAL_OP_TYPE_UCALL:
-		case R_ANAL_OP_TYPE_RCALL:
-		case R_ANAL_OP_TYPE_MCALL:
-			// nothing happens
-			break;
-		default:
+		if (aop.type & R_ANAL_OP_TYPE_CALL) {
+			// skip
+		} else if (aop.type & R_ANAL_OP_TYPE_UCALL) {
+			// skip
+		} else {
 			r_reg_setv (core->anal->reg, "PC", aop.addr + aop.size);
 			r_reg_setv (core->dbg->reg, "PC", aop.addr + aop.size);
 			const char *e = R_STRBUF_SAFEGET (&aop.esil);
