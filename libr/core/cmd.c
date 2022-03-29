@@ -4477,8 +4477,9 @@ fuji:
 		r_str_trim_head (cmd);
 		rc = r_cmd_call (core->rcmd, cmd);
 	} else {
-		rc = false;
+		rc = 0;
 	}
+	core->num->value = rc;
 beach:
 	if (grep) {
 		char *old_grep = grep;
